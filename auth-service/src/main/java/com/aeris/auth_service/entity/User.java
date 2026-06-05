@@ -1,11 +1,14 @@
+package com.aeris.auth_service.entity;
 import jakarta.persistence.*;
 
+@Entity
+@Table(name = "users")
 public class User {
-    @id
+    @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable=false, unique=True)
+    @Column(nullable=false, unique=true)
     private String email;
 
     @Column(nullable=false)
@@ -22,9 +25,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable=false)
-    private ROLE role = Role.USER;
+    private Role role = Role.USER;
 
-    public Enum Role{
+    public enum Role{
         USER, ADMIN
     }
 
@@ -46,6 +49,6 @@ public class User {
     public String getPhoneNumber(){ return phoneNumber;}
     public void setPhoneNumber(String phoneNumber){this.phoneNumber=phoneNumber;}
 
-    public String getRole() {return role;}
-    public void setRole(String role){this.role=role;}
+    public Role getRole() {return role;}
+    public void setRole(Role role){this.role=role;}
 }
