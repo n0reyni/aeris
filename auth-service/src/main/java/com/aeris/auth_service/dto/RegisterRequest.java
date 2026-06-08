@@ -8,6 +8,8 @@ public class RegisterRequest {
     private String email;
     private String password;
 
+    public RegisterRequest() {}
+
     public String getFirstName() {
         return firstName;
     }
