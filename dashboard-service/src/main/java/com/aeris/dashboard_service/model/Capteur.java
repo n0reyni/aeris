@@ -10,7 +10,12 @@ import java.time.LocalDateTime;
 public class Capteur {
 
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "record_id")
+    private Long recordId;
+
+    @Column(name = "id")
+    private Integer sensorReadingCounter; // simulator's own counter, NOT unique — kept as plain data
 
     private Double latitude;
     private Double longitude;
