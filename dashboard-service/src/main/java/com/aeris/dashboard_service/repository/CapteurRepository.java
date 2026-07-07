@@ -7,12 +7,16 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface CapteurRepository extends JpaRepository<Capteur, Integer> {
+public interface CapteurRepository extends JpaRepository<Capteur, Long> {
 
     List<Capteur> findTop50ByOrderByTimestampDesc();
 
     List<Capteur> findByZoneAndParticuleAndTimestampBetweenOrderByTimestampAsc(
             String zone, String particule, LocalDateTime from, LocalDateTime to);
+
+    List<Capteur> findByRecordIdGreaterThanOrderByRecordIdAsc(Long recordId);
+
+    Capteur findTopByOrderByRecordIdDesc();
 
     @Query("select c.zone, avg(c.concentration) from Capteur c " +
            "where c.timestamp >= :since group by c.zone")

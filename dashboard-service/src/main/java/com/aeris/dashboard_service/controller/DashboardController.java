@@ -1,42 +1,37 @@
 package com.aeris.dashboard_service.controller;
-
 import com.aeris.dashboard_service.dto.*;
 import com.aeris.dashboard_service.model.Capteur;
 import com.aeris.dashboard_service.repository.CapteurRepository;
 import com.aeris.dashboard_service.service.DashboardService;
+import com.aeris.dashboard_service.service.ReadingStreamService;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import java.time.LocalDateTime;
 import java.util.List;
-
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000") // adjust for your Next.js dev origin
 public class DashboardController {
-
     private final DashboardService service;
     private final CapteurRepository repo;
-
-    public DashboardController(DashboardService service, CapteurRepository repo) {
+    private final ReadingStreamService streamService;
+    public DashboardController(DashboardService service, CapteurRepository repo, ReadingStreamService streamService) {
         this.service = service;
         this.repo = repo;
+        this.streamService = streamService;
     }
-
     @GetMapping("/kpis")
     public KpiDto kpis() {
         return service.getKpis();
     }
-
     @GetMapping("/zones/avg")
     public List<ZoneAvgDto> zoneAverages() {
         return service.getZoneAverages();
     }
-
     @GetMapping("/alerts")
     public List<AlertDto> alerts() {
         return service.getAlerts();
     }
-
     @GetMapping("/readings")
     public List<Capteur> readings(
             @RequestParam String zone,
@@ -47,9 +42,12 @@ public class DashboardController {
         LocalDateTime t = to != null ? LocalDateTime.parse(to) : LocalDateTime.now();
         return repo.findByZoneAndParticuleAndTimestampBetweenOrderByTimestampAsc(zone, particule, f, t);
     }
-
     @GetMapping("/readings/latest")
     public List<Capteur> latest() {
         return repo.findTop50ByOrderByTimestampDesc();
+    }
+    @GetMapping("/readings/stream")
+    public SseEmitter stream() {
+        return streamService.subscribe();
     }
 }

@@ -46,7 +46,7 @@ public class DashboardService {
         return repo.findAboveThresholdSince(0, since).stream()
                 .filter(c -> c.getConcentration() >= AlertThresholds.warningFor(c.getNotation()))
                 .map(c -> new AlertDto(
-                        c.getId(), c.getZone(), c.getParticule(), c.getNotation(),
+			c.getRecordId(), c.getZone(), c.getParticule(), c.getNotation(),
                         c.getConcentration(),
                         c.getConcentration() >= AlertThresholds.criticalFor(c.getNotation()) ? "critical" : "warning",
                         c.getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
