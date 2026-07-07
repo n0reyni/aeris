@@ -1,0 +1,9 @@
+/home/n0reyni/Project/aeris/ai-service/src/main/java/AiServiceApplication.java
+/home/n0reyni/Project/aeris/ai-service/src/main/java/com/aeris/ai_service/config/SecurityConfig.java
+/home/n0reyni/Project/aeris/ai-service/src/main/java/com/aeris/ai_service/config/WebClientConfig.java
+/home/n0reyni/Project/aeris/ai-service/src/main/java/com/aeris/ai_service/controller/AiController.java
+/home/n0reyni/Project/aeris/ai-service/src/main/java/com/aeris/ai_service/dto/ChatRequest.java
+/home/n0reyni/Project/aeris/ai-service/src/main/java/com/aeris/ai_service/dto/ChatResponse.java
+/home/n0reyni/Project/aeris/ai-service/src/main/java/com/aeris/ai_service/security/JwtAuthFilter.java
+/home/n0reyni/Project/aeris/ai-service/src/main/java/com/aeris/ai_service/security/JwtService.java
+/home/n0reyni/Project/aeris/ai-service/src/main/java/com/aeris/ai_service/service/AiService.java
