@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: notifier-service
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: aeris-alert-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+aeris:
+  kafka:
+    topic-capteurs: topic-capteurs
+    topic-alertes: aeris-alertes
+  emqx:
+    broker-url: tcp://localhost:1883
+    client-id: aeris-notifier-service
+    topic-alertes: /alertes
+  seuils:
+    NH3: 25.0
+    N2: 80.0
+    CO2: 60.0
+    CO: 50.0
+    SO2: 40.0
+server:
+  port: 8090
