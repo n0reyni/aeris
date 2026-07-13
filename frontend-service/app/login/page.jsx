@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { login } from "../lib/api";
+import { login, getToken } from "@/lib/api";
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -10,6 +10,16 @@ export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  // Si un token existe déjà, on ne montre pas le formulaire : on redirige
+  useEffect(() => {
+    if (getToken()) {
+      router.replace("/dashboard");
+    } else {
+      setCheckingAuth(false);
+    }
+  }, [router]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -21,13 +31,15 @@ export default function LoginPage() {
     setError("");
     try {
       await login(form);
-      router.push("/ia");
+      router.push("/dashboard");
     } catch (err) {
       setError("Email ou mot de passe incorrect.");
     } finally {
       setLoading(false);
     }
   };
+
+  if (checkingAuth) return null;
 
   return (
     <div className="flex justify-center items-center min-h-[80vh]">
